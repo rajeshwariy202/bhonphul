@@ -9,11 +9,11 @@ import DevicesPage from './pages/DevicesPage';
 import LogsAPage from './pages/LogsAPage';
 import LogsBPage from './pages/LogsBPage';
 import DeviceIdPage from './pages/DeviceIdPage';
-
-
+import AddNewDevicesPage from './pages/AddNew';
+import type { FC } from 'react'; // Added type import for FC, as per previous fix
 
 // A simple component to handle the initial redirect
-const HomeRedirect: React.FC = () => {
+const HomeRedirect: FC = () => { // Changed to FC
   const navigate = useNavigate();
   React.useEffect(() => {
     // Redirect to the login page by default when the app loads
@@ -22,12 +22,12 @@ const HomeRedirect: React.FC = () => {
   return null; // This component doesn't render anything visible
 };
 
-const App: React.FC = () => {
+const App: FC = () => { // Changed to FC
   return (
     <Router>
       <Routes>
         {/* Authentication Routes */}
-         <Route path="/" element={<HomeRedirect />} />
+        <Route path="/" element={<HomeRedirect />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<CreateAccountPage />} />
 
@@ -36,18 +36,16 @@ const App: React.FC = () => {
         <Route path="/" element={<HomePage />}>
           {/* Default route inside HomePage when just '/' is accessed, redirects to dashboard */}
           <Route path="dashboard" element={<DashboardContent />} /> {/* Use relative path "dashboard" */}
-
-          {/* Devices Routes: DevicesPage will render at /devices */}
-          {/* This is the correct and standard way to define nested routes. */}
-          {/* It means /devices shows DevicesPage, and /devices/:id shows DeviceIDPage, both within HomePage's Outlet. */}
           <Route path="devices" element={<DevicesPage />} /> {/* This route will render DevicesPage directly at /devices */}
-          <Route path="devices-id" element={<DeviceIdPage />} /> {/* This route will render DeviceIDPage directly at /devices/:id */}
+          {/* IMPORTANT: For DeviceIdPage, use a dynamic segment like :id */}
+          <Route path="devices/:id" element={<DeviceIdPage />} /> {/* Corrected route for DeviceIdPage */}
 
 
           {/* Add routes for other sidebar items */}
           {/* Keep the logs route, using relative path */}
           <Route path="logs" element={<LogsBPage />} />
-          <Route path="logs-a" element={<LogsAPage />} /> 
+          <Route path="logs-a" element={<LogsAPage />} />
+          <Route path="add-new" element={<AddNewDevicesPage />} />
         </Route>
 
         {/* Fallback for unknown paths (optional) */}
@@ -56,8 +54,5 @@ const App: React.FC = () => {
     </Router>
   );
 };
-
-
-
 
 export default App;

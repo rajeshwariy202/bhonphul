@@ -12,7 +12,7 @@ const DeviceIdPage: React.FC = () => {
   return (
     // Changed overall background from dark gray to white, text to black
     <div className="flex-1 p-6 bg-white text-gray-800 min-h-screen">
-      {/* <h1 className="text-2xl font-bold mb-6">Device Details: {id}</h1> */}
+      <h1 className="text-2xl font-bold mb-6">Device Details: {id}</h1>
       <DeviceIdSection />
       <KeyMetricsSection />
       <Master001Section />
